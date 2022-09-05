@@ -1,0 +1,5 @@
+## Interface: 90207
+## Title: Autocrafter
+## SavedVariables: _autocrafter_global
+
+autocrafter.lua
