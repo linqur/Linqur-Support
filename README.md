@@ -10,10 +10,12 @@
 
 # API:
 
-/run _craft_assistent:start(craft_id, item_crafted_id, count)
+## Запуск процесса
 
+/run _craft_assistent:start(craft_id, item_crafted_id, count)
 - craft_id - id крафта
 - item_crafted_id - id предмета который будет скрафчен
 - count - количество крафтов
 
-
+## Остановка процесса
+/run _craft_assistent:stop()
