@@ -1,0 +1,12 @@
+## Interface: 90207
+## Title: LinqurSupport
+
+LinqurSupport.lua
+
+# Craft And Sell
+Modules/CraftAndSell/script.lua
+Modules/CraftAndSell/craft.lua
+Modules/CraftAndSell/sell.lua
+
+# Trade
+Modules/Trade/script.lua
