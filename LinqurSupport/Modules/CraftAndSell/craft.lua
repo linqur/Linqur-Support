@@ -1,5 +1,5 @@
 function _linqur_suport.craft_and_sell:craft()
-    local count = _linqur_suport.craft_and_sell:getEmptySlotCount()
+    local count = _linqur_suport.craft_and_sell:getCountToCraft()
     if count > 0 then
         C_TradeSkillUI.CraftRecipe(_linqur_suport.craft_and_sell.craft_id, count)
     else
@@ -7,8 +7,12 @@ function _linqur_suport.craft_and_sell:craft()
     end
 end
 
+function _linqur_suport.craft_and_sell:getCountToCraft()
+    return math.min(_linqur_suport.craft_and_sell:getEmptySlotCount(), C_TradeSkillUI.GetRecipeInfo(_linqur_suport.craft_and_sell.craft_id).numAvailable)
+end
+
 function _linqur_suport.craft_and_sell:isDoneCraft()
-    if _linqur_suport.craft_and_sell:getEmptySlotCount() < 1 then
+    if _linqur_suport.craft_and_sell:getCountToCraft() < 1 then
         _linqur_suport.craft_and_sell:creftDone()
     end
 end

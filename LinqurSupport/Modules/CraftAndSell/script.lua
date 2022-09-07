@@ -59,6 +59,6 @@ function linqur_suport.craft_and_sell.events:BAG_UPDATE()
         _linqur_suport.craft_and_sell:isDoneCraft()
     end
     if _linqur_suport.craft_and_sell.action == 'sell' then
-        _linqur_suport.craft_and_sell:isDoneSell()
+        _linqur_suport.craft_and_sell:sell()
     end
 end
