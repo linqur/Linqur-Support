@@ -1,12 +1,15 @@
 _linqur_suport.craft_and_sell = {
     runing= false,
     init = false,
-    action = nil
+    action = nil,
+    events = {}
 }
 
 function _linqur_suport:craftAndSell(craft_id)
+     _linqur_suport:printMessage('1')
     _linqur_suport.craft_and_sell.craft_id = craft_id
-    
+    _linqur_suport.craft_and_sell.crafted_item_id = _linqur_suport:getItemIdByItemLink(C_TradeSkillUI.GetRecipeItemLink(craft_id))
+    _linqur_suport:printMessage('2')
     if _linqur_suport.craft_and_sell.init ~= true then
         _linqur_suport.craft_and_sell:init()
     end
@@ -33,32 +36,24 @@ function _linqur_suport.craft_and_sell:stop()
 end
 
 function _linqur_suport.craft_and_sell:init()
-    linqur_suport.craft_and_sell.frame = CreateFrame("Frame") 
-    linqur_suport.craft_and_sell.frame:SetScript("OnEvent", linqur_suport.craft_and_sell.OnEvent) 
-    linqur_suport.craft_and_sell.frame:RegisterEvent("BAG_UPDATE") 
-    linqur_suport.craft_and_sell.init = true;
+    _linqur_suport.craft_and_sell.frame = CreateFrame("Frame") 
+    _linqur_suport.craft_and_sell.frame:SetScript("OnEvent", _linqur_suport.craft_and_sell.OnEvent) 
+    _linqur_suport.craft_and_sell.frame:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+    _linqur_suport.craft_and_sell.frame:RegisterEvent("BAG_UPDATE")
+    _linqur_suport.craft_and_sell.init = true;
 end
 
-function linqur_suport.craft_and_sell:OnEvent(event, ...)
-    if _linqur_suport.craft_and_sell.runing then
-        linqur_suport.craft_and_sell.events[event](...)
+function _linqur_suport.craft_and_sell:OnEvent(event, ...)
+    if _linqur_suport.craft_and_sell.runing == true then
+        _linqur_suport.craft_and_sell.events[event](...)
     end
 end
 
-function _linqur_suport.craft_and_sell:creftDone()
+function _linqur_suport.craft_and_sell:creftIsDone()
     _linqur_suport.craft_and_sell.action = 'sell'
     _linqur_suport.craft_and_sell:sell()
 end
 
 function _linqur_suport.craft_and_sell:sellDone()
     _linqur_suport.craft_and_sell:stop()
-end
-
-function linqur_suport.craft_and_sell.events:BAG_UPDATE()
-    if _linqur_suport.craft_and_sell.action == 'craft' then
-        _linqur_suport.craft_and_sell:isDoneCraft()
-    end
-    if _linqur_suport.craft_and_sell.action == 'sell' then
-        _linqur_suport.craft_and_sell:sell()
-    end
 end
