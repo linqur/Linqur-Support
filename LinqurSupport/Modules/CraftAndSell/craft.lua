@@ -1,24 +1,27 @@
 function _linqur_suport.craft_and_sell:craft()
-    local count = _linqur_suport.craft_and_sell:getCountToCraft()
-    if count > 0 then
-        C_TradeSkillUI.CraftRecipe(_linqur_suport.craft_and_sell.craft_id, count)
+    _linqur_suport.craft_and_sell.crafted_count = 0
+    _linqur_suport.craft_and_sell.needly_to_craft_count = _linqur_suport.craft_and_sell:getNeedlyToCtaftCount()
+    if _linqur_suport.craft_and_sell.needly_to_craft_count > 0 then
+        C_TradeSkillUI.CraftRecipe(_linqur_suport.craft_and_sell.craft_id, _linqur_suport.craft_and_sell.needly_to_craft_count)
     else
-        _linqur_suport.craft_and_sell:creftDone()
+        _linqur_suport.craft_and_sell:creftIsDone()
     end
 end
 
-function _linqur_suport.craft_and_sell:getCountToCraft()
+function _linqur_suport.craft_and_sell:getNeedlyToCtaftCount()
     return math.min(_linqur_suport.craft_and_sell:getEmptySlotCount(), C_TradeSkillUI.GetRecipeInfo(_linqur_suport.craft_and_sell.craft_id).numAvailable)
 end
 
-function _linqur_suport.craft_and_sell:isDoneCraft()
-    if _linqur_suport.craft_and_sell:getCountToCraft() < 1 then
-        _linqur_suport.craft_and_sell:creftDone()
-    end
-end
+function _linqur_suport.craft_and_sell.events:UNIT_SPELLCAST_SUCCEEDED()
+    if _linqur_suport.craft_and_sell.action ~= 'craft' then
+        return
+    end 
 
-function _linqur_suport.craft_and_sell:stopCrafting()
-    C_TradeSkillUI.StopRecipeRepeat()
+    _linqur_suport.craft_and_sell.crafted_count = _linqur_suport.craft_and_sell.crafted_count + 1
+
+    if _linqur_suport.craft_and_sell.crafted_count >= _linqur_suport.craft_and_sell.needly_to_craft_count then
+        _linqur_suport.craft_and_sell:creftIsDone()
+    end
 end
 
 function  _linqur_suport.craft_and_sell:getEmptySlotCount()
@@ -31,4 +34,8 @@ function  _linqur_suport.craft_and_sell:getEmptySlotCount()
         end
     end
     return count
+end
+
+function _linqur_suport.craft_and_sell:stopCrafting()
+    C_TradeSkillUI.StopRecipeRepeat()
 end
