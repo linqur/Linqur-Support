@@ -1,4 +1,4 @@
-_linqur_suport.craft_and_sell.sellLimit = 1
+_linqur_suport.craft_and_sell.sellLimit = 7
 _linqur_suport.craft_and_sell.sellingSlots = {}
 
 function _linqur_suport.craft_and_sell:sell()
@@ -23,7 +23,8 @@ function _linqur_suport.craft_and_sell:sell()
 end
 
 function _linqur_suport.craft_and_sell:needlyToSell(bag, slot)
-    return false
+	local id = GetContainerItemID(bag, slot)
+    return id ~= nil and id == _linqur_suport.craft_and_sell.crafted_item_id
 end
 
 function _linqur_suport.craft_and_sell:addToSell(bag, slot)
@@ -56,4 +57,12 @@ end
 
 function _linqur_suport.craft_and_sell:isSelledSlot(bag, slot)
     return GetContainerItemID(bag, slot) == nil
+end
+
+function _linqur_suport.craft_and_sell.events:BAG_UPDATE()
+	if _linqur_suport.craft_and_sell.action ~= 'sell' then
+		return
+	end
+
+	_linqur_suport.craft_and_sell:sell()
 end
