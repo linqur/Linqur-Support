@@ -23,6 +23,6 @@
 
 ### API:
 
-/run  _linqur_suport:trade(items)
+/run  _linqur_suport:trade(itemsId)
 
-- items - массив id или названий предметов которые нужно переместить
+- itemsId - массив id предметов которые нужно переместить
