@@ -6,10 +6,9 @@ _linqur_suport.craft_and_sell = {
 }
 
 function _linqur_suport:craftAndSell(craft_id)
-     _linqur_suport:printMessage('1')
     _linqur_suport.craft_and_sell.craft_id = craft_id
     _linqur_suport.craft_and_sell.crafted_item_id = _linqur_suport:getItemIdByItemLink(C_TradeSkillUI.GetRecipeItemLink(craft_id))
-    _linqur_suport:printMessage('2')
+
     if _linqur_suport.craft_and_sell.init ~= true then
         _linqur_suport.craft_and_sell:init()
     end
